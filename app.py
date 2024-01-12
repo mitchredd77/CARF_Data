@@ -5,6 +5,7 @@ import pandas as pd
 wb1 = load_workbook(filename="PatientCARF_Data.xlsx")
 sheet = wb1.active
 
+# Removes files from previous runs if they exist, copies blank template of Patient Data before running
 if os.path.exists("New_Patient_Data.xlsx"):
    print("New_Patient_Data.xlsx exists")
    os.remove("New_Patient_Data.xlsx")
@@ -17,6 +18,7 @@ if os.path.exists("Template/New_Patient_Data_Clean.xlsx"):
 wb2 = load_workbook(filename="New_Patient_Data.xlsx")
 sheet2 = wb2.active
 
+# Finds the correct column by searching headers
 def find_col(header):
     column_index = 0
     for col in sheet.iter_cols(min_col=1, max_col=sheet.max_column):
@@ -25,6 +27,7 @@ def find_col(header):
                 column_index = cell.column
                 break
     return column_index
+#
 def get_all_dx_codes():
     total_dx = []
     col = find_col("Dx Codes (From Claim)")
